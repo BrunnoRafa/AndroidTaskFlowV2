@@ -1,0 +1,15 @@
+Compose
+↓
+ViewModel
+↓
+Repository
+↓
+DAO
+↓
+Room
+↓
+Entity
+↓
+Mapper
+↓
+Domain
