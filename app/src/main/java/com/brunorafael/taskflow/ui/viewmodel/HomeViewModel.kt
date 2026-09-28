@@ -2,8 +2,6 @@ package com.brunorafael.taskflow.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.brunorafael.taskflow.domain.model.Task
-import com.brunorafael.taskflow.domain.model.TaskType
 import com.brunorafael.taskflow.domain.respository.TaskRepository
 import com.brunorafael.taskflow.ui.state.HomeErrorType
 import com.brunorafael.taskflow.ui.state.HomeUiState
@@ -44,19 +42,5 @@ class HomeViewModel(
 
     fun onAddTaskClick() {
         // ainda vamos implementar
-    }
-
-    fun onSaveTask(
-        description: String,
-        type: TaskType
-    ) {
-        val task = Task(
-            description = description,
-            type = type
-        )
-
-        viewModelScope.launch {
-            taskRepository.createTask(task)
-        }
     }
 }

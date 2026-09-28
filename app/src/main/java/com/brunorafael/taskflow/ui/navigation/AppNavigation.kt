@@ -67,6 +67,7 @@ fun AppNavigation() {
             AddTaskScreen(
                 addTaskViewModel,
                 onBackClick = {
+                    homeViewModel.loadTasks()
                     navController.popBackStack()
                 }
             )
