@@ -25,12 +25,10 @@ class AddTaskViewModel(
 
     val formState = _formState.asStateFlow()
 
-    fun onSaveTask(
-        description: String,
-        type: TaskType
-    ) {
+    fun onSaveTask() {
+        val form = _formState.value
 
-        if (description.isBlank()) {
+        if (form.description.isBlank()) {
             _uiState.value = AddTaskUiState.ValidationError(
                 message = "A descrição não pode estar vazia"
             )
@@ -40,8 +38,8 @@ class AddTaskViewModel(
         _uiState.value = AddTaskUiState.Saving
 
         val task = Task(
-            description = description,
-            type = type
+            description = form.description,
+            type = form.taskType
         )
 
         viewModelScope.launch {

@@ -118,10 +118,7 @@ fun AddTaskScreen(
 
             Button(
                 onClick = {
-                    viewModel.onSaveTask(
-                        description = formState.description,
-                        type = formState.taskType
-                    )
+                    viewModel.onSaveTask()
                 }
             ) {
                 Text("Salvar")
