@@ -81,7 +81,7 @@ fun AddTaskScreen(
         ) {
             OutlinedTextField(
                 value = formState.description,
-                onValueChange = { viewModel::onDescriptionChanged },
+                onValueChange = viewModel::onDescriptionChanged,
                 label = {
                     Text(text = "Descricao")
                 },
