@@ -109,7 +109,7 @@ fun AddTaskScreen(
                             Text(type.name)
                         },
                         onClick = {
-                            taskType = viewModel.onTaskTypeChanged(type)
+                            viewModel.onTaskTypeChanged(type)
                             typeMenuExpanded = false
                         }
                     )
