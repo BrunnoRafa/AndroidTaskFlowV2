@@ -41,11 +41,7 @@ fun AddTaskScreen(
     val descriptionErrorMessage =
         (uiState.value as? AddTaskUiState.ValidationError)?.message
 
-    val formState = viewModel.formState.collectAsState()
-
-    var description by remember {
-        mutableStateOf("")
-    }
+    val formState by viewModel.formState.collectAsState()
 
     var taskType by remember {
         mutableStateOf(TaskType.OTHER)
@@ -84,8 +80,8 @@ fun AddTaskScreen(
             modifier = Modifier.padding(innerPadding)
         ) {
             OutlinedTextField(
-                value = description,
-                onValueChange = { description = it },
+                value = formState.description,
+                onValueChange = { viewModel::onDescriptionChanged },
                 label = {
                     Text(text = "Descricao")
                 },
@@ -127,7 +123,7 @@ fun AddTaskScreen(
             Button(
                 onClick = {
                     viewModel.onSaveTask(
-                        description = description,
+                        description = formState.description,
                         type = taskType
                     )
                 }
