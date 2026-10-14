@@ -19,7 +19,7 @@ class HomeViewModel(
         loadTasks()
     }
 
-    private fun loadTasks() {
+    fun loadTasks() {
         viewModelScope.launch {
             val result = taskRepository.getTasks()
 
@@ -38,9 +38,5 @@ class HomeViewModel(
                     )
                 }
         }
-    }
-
-    fun onAddTaskClick() {
-        // ainda vamos implementar
     }
 }

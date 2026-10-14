@@ -16,28 +16,41 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Modifier
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
 import com.brunorafael.taskflow.domain.model.TaskType
+import com.brunorafael.taskflow.ui.state.AddTaskUiState
+import com.brunorafael.taskflow.ui.viewmodel.AddTaskViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddTaskScreen(
+    viewModel: AddTaskViewModel,
     onBackClick: () -> Unit
 ) {
-    var description by remember {
-        mutableStateOf("")
-    }
+    val uiState = viewModel.uiState.collectAsState()
 
-    var taskType by remember {
-        mutableStateOf(TaskType.OTHER)
-    }
+    val descriptionHasError =
+        uiState.value is AddTaskUiState.ValidationError
+
+    val descriptionErrorMessage =
+        (uiState.value as? AddTaskUiState.ValidationError)?.message
+
+    val formState by viewModel.formState.collectAsState()
 
     var typeMenuExpanded by remember {
         mutableStateOf(false)
+    }
+
+    LaunchedEffect(uiState.value) {
+        if (uiState.value is AddTaskUiState.Success) {
+            onBackClick()
+        }
     }
 
     Scaffold(
@@ -63,10 +76,16 @@ fun AddTaskScreen(
             modifier = Modifier.padding(innerPadding)
         ) {
             OutlinedTextField(
-                value = description,
-                onValueChange = { description = it },
+                value = formState.description,
+                onValueChange = viewModel::onDescriptionChanged,
                 label = {
                     Text(text = "Descricao")
+                },
+                isError = descriptionHasError,
+                supportingText = {
+                    descriptionErrorMessage?.let { message ->
+                        Text(message)
+                    }
                 }
             )
 
@@ -75,7 +94,7 @@ fun AddTaskScreen(
                     typeMenuExpanded = true
                 }
             ) {
-                Text("Tipo: ${taskType.name}")
+                Text("Tipo: ${formState.taskType.name}")
             }
 
             DropdownMenu(
@@ -90,7 +109,7 @@ fun AddTaskScreen(
                             Text(type.name)
                         },
                         onClick = {
-                            taskType = type
+                            viewModel.onTaskTypeChanged(type)
                             typeMenuExpanded = false
                         }
                     )
@@ -99,7 +118,7 @@ fun AddTaskScreen(
 
             Button(
                 onClick = {
-                // Ainda vamos implementar
+                    viewModel.onSaveTask()
                 }
             ) {
                 Text("Salvar")
