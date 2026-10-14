@@ -6,6 +6,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
@@ -13,6 +14,7 @@ import com.brunorafael.taskflow.ui.components.AddTaskButton
 import com.brunorafael.taskflow.ui.components.EmptyState
 import com.brunorafael.taskflow.ui.components.HomeTopBar
 import com.brunorafael.taskflow.ui.components.TaskItem
+import com.brunorafael.taskflow.ui.state.HomeErrorType
 import com.brunorafael.taskflow.ui.state.HomeUiState
 import com.brunorafael.taskflow.ui.viewmodel.HomeViewModel
 
@@ -56,7 +58,18 @@ fun HomeScreen(
                 }
 
                 is HomeUiState.Error -> {
-                    // Implementaremos depois
+                    Text(
+                        text = when (state.type) {
+                            HomeErrorType.CONNECTION ->
+                                "Verifique sua conexão com a internet."
+
+                            HomeErrorType.REQUEST ->
+                                "Não foi possível carregar as tarefas."
+
+                            HomeErrorType.UNKNOWN ->
+                                "Ocorreu um erro inesperado."
+                        }
+                    )
                 }
             }
         }
