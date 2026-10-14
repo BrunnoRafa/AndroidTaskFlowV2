@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.brunorafael.taskflow.domain.model.Task
 import com.brunorafael.taskflow.domain.model.TaskType
 import com.brunorafael.taskflow.domain.respository.TaskRepository
+import com.brunorafael.taskflow.ui.state.AddTaskFormState
 import com.brunorafael.taskflow.ui.state.AddTaskUiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -17,12 +18,25 @@ class AddTaskViewModel(
     private val _uiState =
         MutableStateFlow<AddTaskUiState>(AddTaskUiState.Idle)
 
+    private val _formState =
+        MutableStateFlow(AddTaskFormState())
+
     val uiState = _uiState.asStateFlow()
+
+    val formState = _formState.asStateFlow()
 
     fun onSaveTask(
         description: String,
         type: TaskType
     ) {
+
+        if (description.isBlank()) {
+            _uiState.value = AddTaskUiState.ValidationError(
+                message = "A descrição não pode estar vazia"
+            )
+            return
+        }
+
         _uiState.value = AddTaskUiState.Saving
 
         val task = Task(
@@ -42,5 +56,11 @@ class AddTaskViewModel(
                     )
                 }
         }
+    }
+
+    fun ondescriptionChanged(description: String) {
+        _formState.value = _formState.value.copy(
+            description = description
+        )
     }
 }

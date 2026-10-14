@@ -39,8 +39,4 @@ class HomeViewModel(
                 }
         }
     }
-
-    fun onAddTaskClick() {
-        // ainda vamos implementar
-    }
 }

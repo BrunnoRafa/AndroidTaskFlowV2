@@ -7,6 +7,10 @@ sealed class AddTaskUiState {
 
     data object Success : AddTaskUiState()
 
+    data class ValidationError(
+        val message: String?
+    ) : AddTaskUiState()
+
     data class Error(
         val message: String? = null
     ) : AddTaskUiState()

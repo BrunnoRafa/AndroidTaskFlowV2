@@ -35,6 +35,14 @@ fun AddTaskScreen(
 ) {
     val uiState = viewModel.uiState.collectAsState()
 
+    val descriptionHasError =
+        uiState.value is AddTaskUiState.ValidationError
+
+    val descriptionErrorMessage =
+        (uiState.value as? AddTaskUiState.ValidationError)?.message
+
+    val formState = viewModel.formState.collectAsState()
+
     var description by remember {
         mutableStateOf("")
     }
@@ -80,6 +88,12 @@ fun AddTaskScreen(
                 onValueChange = { description = it },
                 label = {
                     Text(text = "Descricao")
+                },
+                isError = descriptionHasError,
+                supportingText = {
+                    descriptionErrorMessage?.let { message ->
+                        Text(message)
+                    }
                 }
             )
 
