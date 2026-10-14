@@ -43,10 +43,6 @@ fun AddTaskScreen(
 
     val formState by viewModel.formState.collectAsState()
 
-    var taskType by remember {
-        mutableStateOf(TaskType.OTHER)
-    }
-
     var typeMenuExpanded by remember {
         mutableStateOf(false)
     }
@@ -98,7 +94,7 @@ fun AddTaskScreen(
                     typeMenuExpanded = true
                 }
             ) {
-                Text("Tipo: ${taskType.name}")
+                Text("Tipo: ${formState.taskType.name}")
             }
 
             DropdownMenu(
@@ -113,7 +109,7 @@ fun AddTaskScreen(
                             Text(type.name)
                         },
                         onClick = {
-                            taskType = type
+                            taskType = viewModel.onTaskTypeChanged(type)
                             typeMenuExpanded = false
                         }
                     )
