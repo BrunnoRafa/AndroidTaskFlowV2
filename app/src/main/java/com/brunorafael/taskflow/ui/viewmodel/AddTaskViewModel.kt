@@ -58,9 +58,15 @@ class AddTaskViewModel(
         }
     }
 
-    fun ondescriptionChanged(description: String) {
+    fun onDescriptionChanged(description: String) {
         _formState.value = _formState.value.copy(
             description = description
+        )
+    }
+
+    fun onTaskTypeChanged(taskType: TaskType) {
+        _formState.value = _formState.value.copy(
+            taskType = taskType
         )
     }
 }
