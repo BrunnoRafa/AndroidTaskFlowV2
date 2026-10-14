@@ -120,7 +120,7 @@ fun AddTaskScreen(
                 onClick = {
                     viewModel.onSaveTask(
                         description = formState.description,
-                        type = taskType
+                        type = formState.taskType
                     )
                 }
             ) {
