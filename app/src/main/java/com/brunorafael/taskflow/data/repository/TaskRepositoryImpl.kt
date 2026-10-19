@@ -11,16 +11,13 @@ class TaskRepositoryImpl(
     private val taskMapper: TaskMapper
 ) : TaskRepository {
     override suspend fun getTasks(): Result<List<Task>> {
-        return Result.failure(
-            IllegalStateException("Erro simulado para teste")
-        )
-//        return runCatching {
-//            val entities = taskDao.getTasks()
-//
-//            entities.map { entity ->
-//                taskMapper.toDomain(entity)
-//            }
-//        }
+        return runCatching {
+            val entities = taskDao.getTasks()
+
+            entities.map { entity ->
+                taskMapper.toDomain(entity)
+            }
+        }
     }
 
     override suspend fun createTask(task: Task): Result<Unit> {
