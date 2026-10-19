@@ -21,6 +21,8 @@ class HomeViewModel(
 
     fun loadTasks() {
         viewModelScope.launch {
+            _uiState.value = HomeUiState.Loading
+
             val result = taskRepository.getTasks()
 
             result
