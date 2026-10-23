@@ -16,13 +16,12 @@ fun TaskItem(
     task: Task,
     onCompletionChange: (Boolean) -> Unit
 ) {
-    var checked by remember { mutableStateOf(false) }
 
     Row(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Checkbox(
-            checked = checked,
+            checked = task.isCompleted,
             onCheckedChange = onCompletionChange
         )
         Text(
