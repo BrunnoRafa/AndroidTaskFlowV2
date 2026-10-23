@@ -5,7 +5,10 @@ import androidx.compose.runtime.Composable
 import com.brunorafael.taskflow.domain.model.Task
 
 @Composable
-fun TaskItem(task: Task) {
+fun TaskItem(
+    task: Task,
+    onCompletionChange: (Boolean) -> Unit
+) {
     Text(
         text = task.description
     )
