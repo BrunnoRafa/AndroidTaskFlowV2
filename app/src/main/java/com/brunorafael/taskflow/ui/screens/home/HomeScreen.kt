@@ -53,7 +53,10 @@ fun HomeScreen(
                 is HomeUiState.Success -> {
                     LazyColumn {
                         items(state.tasks) { task ->
-                            TaskItem(task = task)
+                            TaskItem(
+                                task = task,
+                                onCompletionChange = {} // TODO: Implementação pendente
+                            )
                         }
                     }
                 }
