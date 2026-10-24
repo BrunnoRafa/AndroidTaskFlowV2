@@ -53,8 +53,8 @@ class HomeViewModel(
         val task = currentState.tasks.find { it.id == taskId }
             ?: return
 
-
-
-
+        val updatedTask = task.copy(
+            isCompleted = isCompleted
+        )
     }
 }
