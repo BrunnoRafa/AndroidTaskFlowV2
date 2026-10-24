@@ -56,5 +56,9 @@ class HomeViewModel(
         val updatedTask = task.copy(
             isCompleted = isCompleted
         )
+
+        viewModelScope.launch {
+            val result = taskRepository.updateTask(updatedTask)
+        }
     }
 }
