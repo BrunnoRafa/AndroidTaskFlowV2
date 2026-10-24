@@ -8,6 +8,7 @@ import com.brunorafael.taskflow.ui.state.HomeUiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import java.util.UUID
 
 class HomeViewModel(
     private val taskRepository: TaskRepository
@@ -40,5 +41,20 @@ class HomeViewModel(
                     )
                 }
         }
+    }
+
+    fun updateTaskCompletion(
+        taskId: UUID,
+        isCompleted: Boolean
+    ) {
+        val currentState = _uiState.value as? HomeUiState.Success
+            ?: return
+
+        val task = currentState.tasks.find { it.id == taskId }
+            ?: return
+
+
+
+
     }
 }
